@@ -1,0 +1,21 @@
+---
+# version: "2.1"
+
+services:
+
+  agnosticd-dev:
+    # image: dockerhub.io/tonykay/rhel9-code-server-base:v0.0.1
+    # image: tonykay/rhel9-vsc-code-server:arm64-v0.0.4 
+    image: rhel8-code-server:latest
+    container_name: agnosticd
+    hostname: agnosticd
+    volumes:
+      - ~/repos/agnosticd/repo/agnosticd:/home/devops/agnosticd
+      - ~/secrets:/home/devops/secrets
+      - ~/.aws:/home/devops/.aws
+    ports:
+      - 8080:8080
+    environment:
+      - "DOCKER_USER=tok"
+      - "PASSWORD=changeme"
+        #    restart: unless-stopped
