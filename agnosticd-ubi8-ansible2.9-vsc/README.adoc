@@ -1,17 +1,15 @@
 === Overview
 
-A simple Visual Studio Code Server image that allows the use of VSC on your lcao machine via a browser
-
-
-=== Usage
+Complete Agnosticd Development and Deployment container with Visual Studio Code Server based UI.
+Built on ubi8.
 
 *Quickest* 
 
-. `docker compose up -d`  
-. and `docker compose down` to stop
+. start: `docker compose up -d`  # You will need to have a `~/secrets`, can be empty
+. stop: `docker compose down` to stop
 
-Then browse to http://localhost:8080 and password `r3dh4t1!`
-(Password is set in `config/config/code-server/config.yaml`)
+Then browse to http://localhost:8080 and password changeme
+(Password is set in `config/config/code-server/config.yaml`, can be over-ridden bu ENV var)
 
 ==== _very_ Long Hand
 
@@ -26,13 +24,18 @@ docker run -d --rm
   quay.io/tonykay/rhel-vsc-code-server:latest
 ----
 
+=== Resources
+
+* link:https://www.docker.com/blog/how-to-rapidly-build-multi-architecture-images-with-buildx/[ocker Multi Arch Builds]
+
 #### TODO document changing your password
 
 ### Misc
 
-* Uses Red Hat ubi 9 image as its base
+* Uses Red Hat ubi 8 image as its base
 ** See Dockerfile(s)
 * Supports ubi tooling
+
 
 === TODO
 

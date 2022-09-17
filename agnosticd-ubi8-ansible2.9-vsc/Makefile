@@ -1,16 +1,15 @@
 REGISTRY               = docker.io/tonykay
 IMAGE_NAME             = agnosticd-ansible-2.9-vsc
-VERSION                = v0.0.2
+
+# TODO: Sort out versioning, pass as a CLI Arg?
+
+VERSION                = latest
 
 HOSTNAME               = agnosticd
 CONTAINER_NAME         = agnosticd
 PASSWORD               = changeme
 
 SHELL_COMMAND          = bash
-
-#CONTAINER_RUNTIME      = docker
-
-# Used instead of docker run.... bash 
 
 help : ## Show this help - technically unnecessary as `make` alone will do 
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -22,12 +21,15 @@ help : ## Show this help - technically unnecessary as `make` alone will do
 : ## TIP! make supports tab completion with *modern* shells e.g. zsh etc
 : ##  
 
-build : ## Do a docker based buildx multiarch build for amd64 arm64
+build-all : ## Do a docker based buildx multiarch build for amd64 arm64
 	docker buildx build \
-    --platform linux/arm64/v8,linux/amd64 \
-    --tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
-    --push \
-    $(EXTRA_ARGS) .
+		--platform linux/arm64/v8,linux/amd64 \
+		--tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
+		--push \
+		$(EXTRA_ARGS) .
+
+#	docker buildx create --name agdbuilder --use --bootstrap
+#		--tag $(REGISTRY)/$(IMAGE_NAME):$${VERSION:-latest} \
 
 build-arm64 : ## Do a docker based buildx ARM 64 build i.e. --platform linux/arm64/v8 
 	docker buildx build \
@@ -42,6 +44,9 @@ build-x64 : ## Do a docker based buildx AMD 64 (x86)  build i.e. --platform linu
     --tag $(REGISTRY)/$(IMAGE_NAME):amd64-$${VERSION:-latest} \
     --load \
     $(EXTRA_ARGS) .
+
+up: ## run default compose file, backgrounded
+	docker compose up -d
 
 run : ## Run locally using default arch, sharing local directory on 8080
 	docker run -d --rm \

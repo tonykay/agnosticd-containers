@@ -1,9 +1,8 @@
 ---
-# version: "2.1"
 
 services:
 
-  code-server:
+  agnosticd-server:
     image: docker.io/tonykay/agnosticd-ansible-2.9-vsc
     container_name: agnosticd
     hostname: agnosticd
