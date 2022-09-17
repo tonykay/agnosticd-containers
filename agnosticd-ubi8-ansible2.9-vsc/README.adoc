@@ -8,7 +8,7 @@ Built on ubi8.
 . start: `docker compose up -d`  # You will need to have a `~/secrets`, can be empty
 . stop: `docker compose down` to stop
 
-Then browse to http://localhost:8080 and password changeme
+Then browse to http://localhost:8000 and password changeme
 (Password is set in `config/config/code-server/config.yaml`, can be over-ridden bu ENV var)
 
 ==== _very_ Long Hand
@@ -17,7 +17,7 @@ Then browse to http://localhost:8080 and password changeme
 ----
 docker run -d --rm 
   --name vscode-server \
-  -p 8080:8080 \
+  -p 8000:8080 \
   --hostname devops \
   -v "$(pwd)/config:/home/devops/.config" \
   -e "DOCKER_USER=$USER" \
